@@ -9,30 +9,27 @@ class Key {
 }
 
 class Person {
-  constructor(private key: Key) { }
-    
+  constructor(private key: Key) {}
+
   public getKey(): Key {
     return this.key;
   }
 }
 
 abstract class House {
-  protected door: true | false;
+  protected door: boolean = false;
   protected tenants: Person[] = [];
 
   constructor(protected key: Key) {}
   public comeIn(person: Person) {
-    this.door === true ? this.tenants.push(person) : this.tenants;
+    this.door ? this.tenants.push(person) : this.tenants;
   }
   public abstract openDoor(key: Key): boolean;
 }
 
 class MyHouse extends House {
-  constructor(protected key: Key) {
-    super(key);
-  }
   public openDoor(key: Key): boolean {
-    if (key === this.key) {
+    if (key.getSignature() === this.key.getSignature()) {
       return (this.door = true);
     }
     return (this.door = false);
@@ -53,7 +50,5 @@ house.openDoor(person2.getKey());
 
 house.comeIn(person1);
 house.comeIn(person2);
-
-console.log(house);
 
 export {};
